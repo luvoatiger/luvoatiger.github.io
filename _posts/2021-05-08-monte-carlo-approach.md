@@ -2,7 +2,7 @@
 layout: post
 title: 몬테카를로 시뮬레이션
 date: 2021-05-08
-excerpt: "Monte Carlo Approach"
+excerpt: "1. Monte Carlo Approach"
 tags: [simulation]
 comment: true
 ---
