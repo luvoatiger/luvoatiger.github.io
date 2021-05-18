@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 몬테카를로 시뮬레이션
-date: 2021-05-1
+date: 2021-05-15
 excerpt: "2. Monte Carlo Integration"
 tags: [simulation]
 comment: true
