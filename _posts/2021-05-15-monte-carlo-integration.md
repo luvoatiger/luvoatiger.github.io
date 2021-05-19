@@ -28,17 +28,13 @@ comment: true
     \theta = \int_{-\infty}^{\infty}{g(u)f_{U}{(u)}du}=\int_{0}^{1}{g(u)f_{U}{(u)}du} = E(g(u))
     $$
 </p>
-그리고 $U$가 확률변수이므로 확률변수들의 함수인 $g(u)$도 확률변수입니다. 따라서 강대수의 법칙에 의해 다음이 성립합니다.
-$$
-\lim_{n \to \infty} {\sum_{i=1}^{n} {g(u_{i})}\over {n}} = E(g(u))
-$$
-
-    
+그리고 $U$가 확률변수이므로 확률변수들의 함수인 $g(u)​$도 확률변수입니다. 따라서 강대수의 법칙에 의해 다음이 성립합니다.
 <p align='center'>
     $$
-	\lim_{n \to \infty} {{g(u_{1}) + g(u_{2}) + ... + g(u_{n})}}\over {n} = E(g(u))
-	$$
+	\lim_{n \to \infty} {\sum_{i=1}^{n} {g(u_{i})}\over {n}} = E(g(u))
+    $$
 </p>    
+
 
 
 # 핵심
