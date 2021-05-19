@@ -31,7 +31,7 @@ comment: true
 그리고 $$U$$가 확률변수이므로 확률변수들의 함수인 $$g(u)​$$도 확률변수입니다. 따라서 강대수의 법칙에 의해 다음이 성립합니다.
 <p align='center'>
     $$
-	\lim_{n \to \infty} {\sum_{i=1}^{n} {g(u_{i})}\over {n}} = E(g(u))
+	\lim_{n \to \infty} {\sum_{i=1}^{n} {g(u_{i})}\over {n}} = E(g(u)) = \theta
     $$
 </p>    
 
