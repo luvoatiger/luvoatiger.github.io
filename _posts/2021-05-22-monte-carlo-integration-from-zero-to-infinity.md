@@ -31,7 +31,7 @@ comment: true
 
 <p align='center'>
 	$$
-    u = \frac{1}{x + 1}, du = -y^2 dx 
+    u = \frac{1}{x + 1}, du = -u^2 dx 
     $$
 </p>
 
@@ -44,7 +44,7 @@ comment: true
 
 <p align='center'>
 	$$
-    \int_{a}^{b}g(x)dx = \int_{0}^{1} \frac{g(\frac{1}{y} - 1)}{y^2} du
+    \int_{a}^{b}g(x)dx = \int_{0}^{1} \frac{g(\frac{1}{u} - 1)}{u^2} du
     $$
 </p>
 
