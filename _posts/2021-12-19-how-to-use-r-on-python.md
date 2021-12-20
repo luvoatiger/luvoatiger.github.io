@@ -5,17 +5,14 @@ date: 2021-12-19
 excerpt: "How to use R on Python"
 tags: [R], [Rpy2]
 comment: true
+
 ---
 
 
 
 회사에서 ML/DL 이외에도 통계 모델들을 이용해서 문제를 푸는 경우도 있다. 이번에 R을 파이썬 환경에서 사용할 필요를 느껴서 그 방법을 정리하려고 한다. 동일 알고리즘을 파이썬보다 R을 사용했을 때, CPU 코어 사용량은 1/40로 줄어들었고 학습 시간은 50% 감소했다.
 
-
-
 먼저 R을 설치한다.
-
-
 
 ```bash
 # 오프라인 설치 매뉴얼로 작성
@@ -105,15 +102,16 @@ yum install R-3.6.0-1.el7.x86_64.rpm
 # R 설치 확인
 
 rpm -qa | grep ^R
-
 ```
 
 
 
 그 다음 Rpy2 패키지를 설치해서 파이썬에서 R을 사용할 수 있도록 한다. 디펜던시 패키지까지 온라인으로 한 번에 받은 다음, 반입할 CD에 담는다.
 
+
+
 ```bash
-(base) conda activate {테스트 가상환경이름}
+base) conda activate {테스트 가상환경이름}
 
 (테스트 가상환경이름) pip install rpy2
 
@@ -178,7 +176,6 @@ tzlocal-4.1.dist-info/
 zipp-3.6.0.dist-info/
 
 zipp.py
-
 ```
 
 
@@ -219,6 +216,5 @@ model = ro.r.lm(ro.Formula(r_formula), data=R_pandas_df)
 predict_value = ro.r.predict(model, newdata = R_df, interval="prediction", level=0.99)
 
 pred_df = pd.DataFrame(predict_value, columns=["pred", "lower", "upper"])
-
 ```
 
