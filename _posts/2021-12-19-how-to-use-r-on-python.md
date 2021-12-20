@@ -3,9 +3,8 @@ layout: post
 title: 파이썬에서 R 사용하기
 date: 2021-12-19
 excerpt: "How to use R on Python"
-tags: [R], [Rpy2]
+tags: [R, Rpy2]
 comment: true
-
 ---
 
 
