@@ -2,7 +2,7 @@
 layout: post
 title: 파이썬에서 R 사용하기
 date: 2021-12-20
-excerpt: "How to install and use R, Rpy2"
+excerpt: "how to use R on Python"
 tags: [R], [rpy2]
 comment: true
 ---
