@@ -2,7 +2,7 @@
 layout: post
 title: 파이썬에서 R 사용하기
 date: 2021-12-20
-excerpt: "How to install and use R and rpy2"
+excerpt: "1. Monte Carlo Approach"
 tags: [R], [rpy2]
 comment: true
 ---
