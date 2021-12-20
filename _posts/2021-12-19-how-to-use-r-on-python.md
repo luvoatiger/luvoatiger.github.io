@@ -1,11 +1,12 @@
 ---
 layout: post
 title: 파이썬에서 R 사용하기
-date: 2021-12-20
-excerpt: "how to use R on Python"
-tags: [R], [rpy2]
+date: 2021-12-19
+excerpt: "How to use R on Python"
+tags: [R], [Rpy2]
 comment: true
 ---
+
 
 
 회사에서 ML/DL 이외에도 통계 모델들을 이용해서 문제를 푸는 경우도 있다. 이번에 R을 파이썬 환경에서 사용할 필요를 느껴서 그 방법을 정리하려고 한다. 동일 알고리즘을 파이썬보다 R을 사용했을 때, CPU 코어 사용량은 1/40로 줄어들었고 학습 시간은 50% 감소했다.
@@ -17,7 +18,6 @@ comment: true
 
 
 ```bash
-
 # 오프라인 설치 매뉴얼로 작성
 
 # yumdownloader를 이용해 오프라인 설치 시 필요한 dependency까지 한 번에 설치하기 위함
@@ -113,7 +113,6 @@ rpm -qa | grep ^R
 그 다음 Rpy2 패키지를 설치해서 파이썬에서 R을 사용할 수 있도록 한다. 디펜던시 패키지까지 온라인으로 한 번에 받은 다음, 반입할 CD에 담는다.
 
 ```bash
-
 (base) conda activate {테스트 가상환경이름}
 
 (테스트 가상환경이름) pip install rpy2
@@ -187,7 +186,6 @@ zipp.py
 파이썬에서 R을 사용하는 방법은 다음과 같다. pandas에서 데이터 전처리를 다 한 다음에, Fitting 및 Prediction만 R을 이용하는 방식으로 접근한다.
 
 ```python
-
 import rpy2.robjects as ro
 
 from rpy2.robjects.packages import importr
