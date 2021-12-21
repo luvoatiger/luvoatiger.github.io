@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 도커로 WAS, APM 확장하기
-date: 2021-12-19
+date: 2021-11-26
 excerpt: "How to expand was and apm using docker"
 tags: [Docker, APM]
 comment: true
