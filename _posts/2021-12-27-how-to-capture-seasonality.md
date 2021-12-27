@@ -14,7 +14,8 @@ comment: true
 - 거래집중일을 만들기 위해, 데모 모니터링 시스템의 부하 패턴을 1주일에 하루는 부하가 평소보다 많도록 설계했다.
 
 - 실제로 일별 집계 데이터를 보면, 일주일에 하루는 값이 튀는 것을 확인할 수 있다. 지표별로 분단위 값을 모아서 하루 단위로 평균 낸 값이다.
-![business_day](https://github.com/luvoatiger/luvoatiger.github.io/blob/master/imgs/business_day.JPG)
+
+- ![business_day](https://github.com/luvoatiger/luvoatiger.github.io/blob/master/imgs/business_day.JPG)
 
 
 ## 아이디어
@@ -138,6 +139,7 @@ $$ {y}_{t}\quad =\quad {\beta}_{0}\quad +\quad {\beta}_{1}{d}_{1,t}\quad +\quad 
 
 ## 예측 결과 시각화
 학습 데이터와 유사한 계절성을 예측 모델에서도 보여주고 있다.
+
 ![result](https://github.com/luvoatiger/luvoatiger.github.io/blob/master/imgs/result.JPG)
 
 
