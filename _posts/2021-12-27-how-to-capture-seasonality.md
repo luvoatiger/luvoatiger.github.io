@@ -8,7 +8,7 @@ comment: true
 ---
 
 # Seasonal Dummy Regression
-시계열을 구성하는 요소는 크게 세 가지가 있는데, 각각 트렌드(Trend), 계절성(Seasonality) 그리고 나머지(Remainder)이다. 오늘은 고정된 주기의 시계열에서 계절성 진동을 포착하는 방법인 Seasonaly Dummy Regression을 소개하려고 한다.
+시계열을 구성하는 요소는 크게 세 가지가 있는데, 각각 트렌드(Trend), 계절성(Seasonality) 그리고 나머지(Remainder)이다. 오늘은 고정된 주기의 시계열에서 계절성 진동을 포착하는 방법인 Seasonal Dummy Regression을 소개하려고 한다.
 
 ## Dataset
 - 거래집중일을 만들기 위해, 데모 모니터링 시스템의 부하 패턴을 1주일에 하루는 부하가 평소보다 많도록 설계했다.
