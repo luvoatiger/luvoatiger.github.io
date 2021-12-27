@@ -138,6 +138,6 @@ $$ {y}_{t}\quad =\quad {\beta}_{0}\quad +\quad {\beta}_{1}{d}_{1,t}\quad +\quad 
 
 ## 예측 결과 시각화
 학습 데이터와 유사한 계절성을 예측 모델에서도 보여주고 있다.
-![result](https://github.com/luvoatiger/luvoatiger.github.io/blob/master/imgs/results.JPG)
+![result](https://github.com/luvoatiger/luvoatiger.github.io/blob/master/imgs/result.JPG)
 
 
