@@ -15,7 +15,7 @@ comment: true
 
 - 실제로 일별 집계 데이터를 보면, 일주일에 하루는 값이 튀는 것을 확인할 수 있다. 지표별로 분단위 값을 모아서 하루 단위로 평균 낸 값이다.
 
-- ![business_day](/imgs/business_day.PNG){: width="50%"}{: .center}
+- ![business_day](/imgs/business_day.PNG)
 
 
 ## 아이디어
@@ -146,6 +146,6 @@ $$ {y}_{t}\quad =\quad {\beta}_{0}\quad +\quad {\beta}_{1}{d}_{1,t}\quad +\quad 
 ## 예측 결과 시각화
 학습 데이터와 유사한 계절성을 예측 모델에서도 보여주고 있다.
 
-![result](/imgs/result.PNG){: width="50%"}{: .center}
+![result](/imgs/result.PNG)
 
 
