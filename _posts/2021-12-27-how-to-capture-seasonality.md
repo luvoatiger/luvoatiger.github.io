@@ -15,18 +15,24 @@ comment: true
 
 - 실제로 일별 집계 데이터를 보면, 일주일에 하루는 값이 튀는 것을 확인할 수 있다. 지표별로 분단위 값을 모아서 하루 단위로 평균 낸 값이다.
 
-- ![business_day](https://github.com/luvoatiger/luvoatiger.github.io/blob/master/imgs/business_day.PNG)
+- ![business_day](https://github.com/luvoatiger/luvoatiger.github.io/blob/master/imgs/business_day.PNG){: width="50%"}{: .center}
 
 
 ## 아이디어
 - 반복되는 주기를 사전에 알고 있거나 찾아낸 다음에, 주기에 해당하는 만큼의 더미변수를 만든다. 따라서 더미변수의 차원은 주기와 같다.
+
 - 그리고 최소제곱법을 이용해서 모형을 적합한다.
+
 - 더미변수는 표준기저이기 때문에 직교하므로, 다중공선성 위험에서 회피할 수 있다.
+
 - 1주일 주기인 경우, 추정된 더미변수별 회귀계수는 요일별 값들의 평균이 된다.
+
+
 - 예측할 때에는 예측할 날짜의 요일을 구해서 더미변수로 변환시킨 값이 입력값이 된다.
 
 ## 모형
 $$ {y}_{t}\quad =\quad {\beta}_{0}\quad +\quad {\beta}_{1}{d}_{1,t}\quad +\quad {\beta}_{2}{d}_{2,t}\quad +\quad {\beta}_{3}{d}_{3,t}\quad +\quad{\beta}_{4}{d}_{4,t}\quad +\quad {\beta}_{5}{d}_{5,t}\quad +\quad {\beta}_{6}{d}_{6,t}\quad +\quad {\beta}_{7}{d}_{7,t}\quad +  \quad\varepsilon $$
+
 
 - 원래는 Dummy Variable Trap을 피하기 위해 Category 전체 개수보다 한 개 적은 더미변수를 사용해야 하지만, 그렇게 되면 마지막 케이스는 예측값이 0으로 나오는 문제가 있어서 일부러 더미변수 개수를 줄이지 않았다.
 
@@ -140,6 +146,6 @@ $$ {y}_{t}\quad =\quad {\beta}_{0}\quad +\quad {\beta}_{1}{d}_{1,t}\quad +\quad 
 ## 예측 결과 시각화
 학습 데이터와 유사한 계절성을 예측 모델에서도 보여주고 있다.
 
-![result](https://github.com/luvoatiger/luvoatiger.github.io/blob/master/imgs/result.PNG)
+![result](https://github.com/luvoatiger/luvoatiger.github.io/blob/master/imgs/result.PNG){: width="50%"}{: .center}
 
 
