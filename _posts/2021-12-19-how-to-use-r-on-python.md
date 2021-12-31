@@ -179,7 +179,7 @@ zipp.py
 
 
 
-파이썬에서 R을 사용하는 방법은 다음과 같다. pandas에서 데이터 전처리를 다 한 다음에, Fitting 및 Prediction만 R을 이용하는 방식으로 접근한다.
+파이썬에서 R을 사용하는 방법은 다음과 같다. pandas에서 데이터 전처리를 다 한 다음에, Fitting 및 Prediction만 R을 이용하는 방식으로 접근한다. 모든 파이썬 데이터를 R로 처리하는 것보다, 필요한 부분만 R을 가져와서 사용하는 게 훨씬 편하기 때문이다.
 
 ```python
 import rpy2.robjects as ro
