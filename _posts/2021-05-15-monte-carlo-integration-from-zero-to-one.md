@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 몬테카를로 시뮬레이션
+title: 구간 0부터 1까지 수치적분하기
 date: 2021-05-15
 excerpt: "2. Monte Carlo Integration from zero to one"
 tags: [simulation]
