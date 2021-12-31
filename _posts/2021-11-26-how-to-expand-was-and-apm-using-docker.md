@@ -3,7 +3,7 @@ layout: post
 title: Docker로 WAS, APM Agent 확장하기
 date: 2021-11-26
 excerpt: "How to expand was and apm using docker"
-tags: [Docker, APM]
+tags: [Docker]
 comment: true
 ---
 
