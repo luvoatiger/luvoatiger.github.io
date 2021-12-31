@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 몬테카를로 시뮬레이션
+title: 구간 a부터 b까지 수치적분하기
 date: 2021-05-19
 excerpt: "3. Monte Carlo Integration from a to b"
 tags: [simulation]
