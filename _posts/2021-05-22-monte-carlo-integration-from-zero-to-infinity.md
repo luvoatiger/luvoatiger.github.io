@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 몬테카를로 시뮬레이션
+title: 구간 0부터 무한대로 주어진 이상적분을 수치적분하기
 date: 2021-05-22
 excerpt: "4. Monte Carlo Integration from zero to infinity"
 tags: [simulation]
