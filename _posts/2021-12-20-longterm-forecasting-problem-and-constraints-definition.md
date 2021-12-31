@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 장기 부하 예측 문제 정의 및 제약 사항 분석
-date: 2021-12-29
+date: 2021-12-20
 excerpt: "longterm forecasting problem and constraints definition"
 tags: [long term forecasting]
 comment: true
