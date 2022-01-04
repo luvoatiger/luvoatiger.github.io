@@ -2,7 +2,7 @@
 layout: post
 title: 스레드와 프로세스
 date: 2022-01-04
-excerpt: "Thread and Prcoess in Python"
+excerpt: "Thread and Process in Python"
 tags: [Concurrency]
 comment: true
 ---
