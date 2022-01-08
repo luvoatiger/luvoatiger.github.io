@@ -8,7 +8,7 @@ comment: true
 ---
 
 # 개요
-- 모니터링 시스템 전체를 실시간 이상 탐지하는 모듈(sys-e2e)의 학습 시간을 pathos 라이브러리로 단축시켰던 경험을 정리하는 포스팅
+- 모니터링 시스템 전체를 실시간 이상 탐지하는 모듈(sys-e2e)의 학습 시간을 pathos 라이브러리로 단축시켰던 업무 경험을 정리하는 포스팅
 
 ## 학습 과정 구조
 - 사용자가 대시보드에서 sys-e2e 모듈을 학습 요청하면, 서버가 학습 프로세스를 실행시킨다.
@@ -139,7 +139,7 @@ class Analyzer(aimodule.AIModule):
 
         # 분석 모델 인스턴스 생성
         self.all_algorithm = AllAlorithm(self.service_id, self.config, self.logger)
-        self.top_algorithms = TopAlgorithm(self.service_id, self.config, self.logger)
+        self.top_algorithm = TopAlgorithm(self.service_id, self.config, self.logger)
 
     def training(self, train_logger):
         self.logger.info(f"module {self.service_id} start training")
@@ -155,85 +155,37 @@ class Analyzer(aimodule.AIModule):
 
         total_train_time = 0
 
-        for i in range(len(train_target_xcodes)):
-            xcode = train_target_xcodes[i]
+        for i in range(len(target)):
+            xcode = target[i]
 
-            self.logger.info(f"[training] preprocessing data of xcode no.{xcode}")
+            self.logger.info(f"[training] preprocessing data of target no.{xcode}")
             if len(df_1day_all) > 0:
                 df_xcd = df_1day_all.query(f"{self.target_id_field} == '{xcode}'")
-                df_xcd.drop(
-                    [self.target_id_field, "total_elapse_time"], axis=1, inplace=True
-                )
                 df_xcd = df_xcd.set_index("time")
                 df_xcd = df_xcd.interpolate()
-                df_xcd[df_xcd < 0] = np.nan
 
-                # 개별 txn/code 학습
                 if not is_multiprocessing_mode:
-                    (
-                        serial_fbsln_result,
-                        _,
-                        error_code,
-                        error_message,
-                    ) = self.dbsln_txs.fit(xcode, df_xcd, multiprocessing=False)
-                    if serial_fbsln_result is None:
-                        self.logger.error(
-                            f"[training] error '{error_message}' occured while training xcode no.{xcode}"
-                        )
-                        continue
-                    else:
-                        total_train_time += serial_fbsln_result["train_time"]
-
-                    train_prog.log(
-                        "dynamic baseline(xcode)",
-                        ((i + 1) / len(train_target_xcodes) * 100),
-                    )
+                    result = self.top_algorithm.fit(xcode, df_xcd, multiprocessing=False)
 
                 xcode_df_mapper[xcode] = df_xcd
 
         if is_multiprocessing_mode:
             pool = pathos.multiprocessing.Pool(processes=self.number_of_child_processes)
 
-            self.logger.info(
-                f"[training] pool created with {self.number_of_child_processes} child processes"
-            )
-
             input_iterable = [(key, value) for key, value in xcode_df_mapper.items()]
-            chunk_size, remainder = divmod(
-                len(input_iterable), self.number_of_child_processes
-            )
+            chunk_size, remainder = divmod(len(input_iterable), self.number_of_child_processes)
             if remainder != 0:
                 chunk_size += 1
 
-            self.logger.info(
-                "[training] start multiprocessing. check train process log"
-            )
 
-            (
-                txn_models,
-                bizday_train_mode,
-                error_code,
-                error_message,
-                target_list,
-                bizday_train_result,
-            ) = zip(
-                *pool.starmap(self.dbsln_txs.fit, input_iterable, chunksize=chunk_size)
-            )
+            result = zip(*pool.starmap(self.dbsln_txs.fit, input_iterable, chunksize=chunk_size))
 
             pool.close()
             pool.join()
 
-            train_prog.log("dynamic baseline(xcode)", 100)
-            self.logger.info("[training] finish multiprocessing")
-
             if error_code.count(0) < len(error_code):
-                error_info = pd.DataFrame(
-                    zip(target_list, error_code, error_message),
-                    columns=["xcode", "error_code", "error_message"],
-                )
+                error_info = pd.DataFrame(zip(target_list, error_code, error_message), columns=["xcode", "error_code", "error_message"])
                 error_info.dropna(inplace=True)
-                self.logger.error("description of error occured while multiprocessing")
-                self.logger.error(f"{error_info.to_dict(orient='record')}")
 
             models = {}
             for element in txn_models:
