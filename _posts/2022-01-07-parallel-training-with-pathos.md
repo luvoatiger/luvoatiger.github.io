@@ -165,27 +165,23 @@ class Analyzer(aimodule.AIModule):
                 df_xcd = df_xcd.interpolate()
 
                 if not is_multiprocessing_mode:
-                    result = self.top_algorithm.fit(xcode, df_xcd, multiprocessing=False)
+                    result = self.top_algorithm.fit(xcode, df_xcd, multiprocessing=False) # 순차 처리
 
-                xcode_df_mapper[xcode] = df_xcd
+                xcode_df_mapper[xcode] = df_xcd # 타겟과 데이터 매핑
 
         if is_multiprocessing_mode:
-            pool = pathos.multiprocessing.Pool(processes=self.number_of_child_processes)
+            pool = pathos.multiprocessing.Pool(processes=self.number_of_child_processes) # 병렬 처리를 위한 pool 생성
 
-            input_iterable = [(key, value) for key, value in xcode_df_mapper.items()]
+            input_iterable = [(key, value) for key, value in xcode_df_mapper.items()] # input_parameter 만들기
             chunk_size, remainder = divmod(len(input_iterable), self.number_of_child_processes)
             if remainder != 0:
                 chunk_size += 1
 
 
-            result = zip(*pool.starmap(self.dbsln_txs.fit, input_iterable, chunksize=chunk_size))
+            txn_model = zip(*pool.starmap(self.top_algorithm.fit, input_iterable, chunksize=chunk_size)) # 병렬 학습
 
             pool.close()
-            pool.join()
-
-            if error_code.count(0) < len(error_code):
-                error_info = pd.DataFrame(zip(target_list, error_code, error_message), columns=["xcode", "error_code", "error_message"])
-                error_info.dropna(inplace=True)
+            pool.join())
 
             models = {}
             for element in txn_models:
@@ -196,7 +192,7 @@ class Analyzer(aimodule.AIModule):
                         models[xcode] = element[xcode]
 
             self.logger.info(
-                "[training] finish postprocessing fast_baseline multiprocessed model"
+                "[training] finish postprocessing  multiprocessed model"
             )
 
         # save_model
