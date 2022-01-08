@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 동기화 프리미티브 (1) join, Lock, RLock
+title: 동기화 프리미티브 (1) Lock, RLock
 date: 2022-01-03
 excerpt: "Join and Lock"
 tags: [Concurrency]
