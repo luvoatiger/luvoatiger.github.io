@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 데드락과 경합 조건
+title: 교착 상태와 경합 조건
 date: 2022-01-02
 excerpt: "Deadlock and Race Condition"
 tags: [Concurrency]
