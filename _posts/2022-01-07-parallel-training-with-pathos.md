@@ -145,7 +145,7 @@ class Analyzer(aimodule.AIModule):
     def training(self, train_logger):
         self.logger.info(f"module {self.service_id} start training")
 
-		df_all, train_target_xcodes = self.load_data_and_get_target(csv_list)
+        df_all, train_target_xcodes = self.load_data_and_get_target(csv_list)
         
         train_prog.log("process train data", 100)
 
