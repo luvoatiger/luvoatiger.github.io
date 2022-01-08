@@ -149,7 +149,7 @@ class Analyzer(aimodule.AIModule):
         
         train_prog.log("process train data", 100)
 
-        dbsln_result, body, code, message = self.all_algorithm.fit(df_all)
+        all_result, body, code, message = self.all_algorithm.fit(df_all)
 
         xcode_df_mapper = {}
         is_multiprocessing_mode = True if self.number_of_child_processes >= 2 else False
