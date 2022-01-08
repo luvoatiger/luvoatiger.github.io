@@ -71,52 +71,42 @@ class MyWorker():
         self.a = 1
         self.b = 2
         self.c = 3
-        self.RLock = threading.Lock()
- 
-    def modifyAinA(self):
-        with self.RLock:
-            print(f"[modifyAinA] Lock acquired? {self.RLock.locked()}")
-            print(f"[modifyAinA] {self.RLock}")
-            self.a = self.a + 1
-            time.sleep(5)
-        print(f"[modifyAinA] Lock acquired? {self.RLock.locked()}")
-        print(f"[modifyAinA] {self.RLock}")
-         
+        self.Lock = threading.Lock()
+          
     def modifyA(self):
-        with self.RLock:
-            print(f"[modifyA] Lock acquired? {self.RLock.locked()}")
-            print(f"[modifyA] {self.RLock}")
-            self.modifyAinA()
+        with self.Lock:
+            print(f"[modifyA] Lock acquired? {self.Lock._is_owned()}")
+            print(f"[modifyA] {self.Lock}")
             self.a = self.a + 1
             time.sleep(5)
-        print(f"[modifyA] Lock acquired? {self.RLock.locked()}")
-        print(f"[modifyA] {self.RLock}")
+        print(f"[modifyA] Lock acquired? {self.Lock._is_owned()}")
+        print(f"[modifyA] {self.Lock}")
              
     def modifyB(self):
         with self.RLock:
-            print(f"[modifyB] Lock acquired? {self.RLock.locked()}")
-            print(f"[modifyB] {self.RLock}")
+            print(f"[modifyB] Lock acquired? {self.Lock._is_owned()}")
+            print(f"[modifyB] {self.Lock}")
             self.b = self.b - 1
             time.sleep(5)
-        print(f"[modifyB] RLock acquired? {self.RLock.locked()}")
-        print(f"[modifyB] {self.RLock}")
+        print(f"[modifyB] RLock acquired? {self.Lock._is_owned()}")
+        print(f"[modifyB] {self.Lock}")
              
     def modifyBoth(self):
         with self.RLock:
-            print(f"[modifyBoth] Lock acquired? {self.RLock.locked()}")
-            print(f"[modifyBoth] {self.RLock}")
+            print(f"[modifyBoth] Lock acquired? {self.Lock._is_owned()}")
+            print(f"[modifyBoth] {self.Lock}")
             self.modifyA()
             self.modifyB()
-        print(f"[modifyBoth] Lock acquired? {self.RLock.locked()}")
-        print(f"[modifyBoth] {self.RLock}")
+        print(f"[modifyBoth] Lock acquired? {self.Lock._is_owned()}")
+        print(f"[modifyBoth] {self.Lock}")
              
 if __name__ == "__main__":
     workerA = MyWorker()
     workerA.modifyBoth()
 '''
-[modifyBoth] RLock acquired? True
+[modifyBoth] Lock acquired? True
 [modifyBoth] <locked _thread.lock object at 0x000001D32E07A210>
-이후 modifyA() 함수의 컨텍스트 매니저(with self.Rlock)에서 Deadlock이 걸리게 된다.
+이후 modifyA() 함수의 컨텍스트 매니저(with self.lock)에서 Deadlock이 걸리게 된다.
 '''
 ```
 
