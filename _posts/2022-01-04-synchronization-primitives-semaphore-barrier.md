@@ -126,7 +126,8 @@ if __name__ == "__main__":
 [Thread-30] semaphore value in run : 2
 [Thread-30] release None
 [Thread-30] semaphore value in run : 3
-'''```
+'''
+```
 
 ## Barrier
 - Barrier는 장벽처럼 스레드를 대기시키다가 정해진 개수 이상의 스레드가 대기하게 되면, 무너지는 출발선이라고 생각하면 된다.
