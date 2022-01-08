@@ -2,7 +2,7 @@
 layout: post
 title: 동시성 프레임워크 Ray를 이용한 서빙 병렬 처리
 date: 2022-01-08
-excerpt: "parallel model serving with ray"
+excerpt: "parallel serving with ray"
 tags: [Concurrency]
 comment: true
 ---
@@ -13,22 +13,23 @@ comment: true
 
 ## 1. Ray 테스트 배경
 - 실시간 모니터링 서비스는 학습된 모델을 이용해 1분 단위로 수행되며, 구체적으로 다음과 같다.
-  - Web Application(e.g. Flask, Django)을 실행시킨다.
-  - 분석 모듈 클래스의 인스턴스를 생성하고, 초기화한다.
-  - 분석 모듈에서 사용할 해당 타겟(instance, infra, code) 알고리즘 모델들을 로딩한다.
+  - 서버에서 Web Application(e.g. Flask, Django)을 실행시킨다.
+  - Application에서 분석 모듈 클래스의 인스턴스를 생성하고, 초기화한다.
+  - 분석 모듈 인스턴스에서 사용할 해당 타겟(instance, infra, code) 알고리즘 모델들을 로딩한다.
   - API 통신을 통해, 서버에서 데이터를 전달하면서 Web Application에 서빙 요청을 한다.
   - Web application은 요청을 받으면 분석 모듈에 정의된 serving 함수를 호출해 서빙을 완료하고, 서버로 결과를 전달한다.
 
-- 현재 서빙프로세스는 몇 가지 문제점이 있다.
-  - 유입되는 데이터를 순차 처리한다. 유입되는 트랜잭션 데이터가 많아지면 그만큼 inference 시간도 늘어나며, 1분 안에 serving을 못 하기도 한다.
+- 현재 서빙프로세스는 몇 가지 문제가 있다.
+  - 유입되는 데이터를 순차 처리한다. 유입되는 트랜잭션 데이터가 많아지면 그만큼 inference 시간도 늘어나며, 1분 안에 serving을 못 할 위험성이 존재한다.
   - 병렬처리를 위한 파이썬 STL인 multiprocessing, concurrent.futures는 다음 이유로 사용할 수 없다.
-    - Web Application에서 분석 모듈 인스턴스를 초기화하고, API를 통해 서빙하므로 __name__ 은 "__main__"이 아니다.
+    - Web Application에서 분석 모듈 인스턴스를 초기화하고, API를 통해 서빙하므로 " __name__ == '__main__' "이 아니다.
     - 클래스에 정의된 인스턴스 메서드들은 Unpicklable하므로, 내부적으로 pickle을 사용하는 multiprocessing으로는 서빙할 수 없다.
 
 - Ray는 이런 조건들을 만족시키면서, 수행 시간을 줄일 수 있을 것으로 보인다.
   - 클래스에 정의된 인스턴스 메서드들도 병렬 처리할 수 있으며, 초기화 할 때 전역 변수로 일정 개수의 Actor를 생성해두면 ProcessPool과 유사한 효과를 볼 수 있다.
-  - 시스템에서 동작하는 Ray Worker는 함수를 수행할 때만 자원을 사용하고, 그렇지 않으면 최소한의 자원만 쓰며 IDLE 상태를 유지한다.
+  - 시스템에서 동작하는 Ray Worker 프로세스는 함수를 수행할 때만 자원을 사용하고, 그렇지 않으면 최소한의 자원만 쓰며 IDLE 상태를 유지한다.
   - API가 간단해서 사용하기 편하다.
+
 
 ## 2. Ray 소개
 *   Ray는 버클리 대학의 RISE 연구실에서 만들어진 병렬 & 분산처리 프레임워크
@@ -171,18 +172,6 @@ print(results)  # prints [2, 3, 4, 5, 6]
 *   ray를 import하고, 클래스에 데코레이터를 붙여준다.
 
 ```python
-import datetime
-import logging
-import os
-import pickle
-import time
-from pathlib import Path
-
-import numpy as np
-import pandas as pd
-import pathos
-from scipy.stats import norm
-
 from algorithms import aimodel
 from common import aicommon
 from common import constants as bc
@@ -193,8 +182,8 @@ import ray
 @ray.remote
 class Algorithm(aimodel.AIModel):
     def __init__(self, name, config, logger):
-        self.model_id = f"fbsln_{name}"
-        self.model_desc = "dynamic baseline(fast)"
+        self.config = config
+        self.logger = logger
 
 '''
 이하 생략
@@ -247,12 +236,11 @@ class Analyzer(aimodule.AIModule):
         self.serving_algorithm_actor_pool = [Algorithm.remote(self.service_id, self.config, self.logger) 
 for i in range(self.number_of_ray_actor)]
 
-        self._init_features(self.config)
-
 '''
 이하 생략
 '''
     def serving(self, header, data_dict):
+        # API에서 호출되는 서빙 함수
         self.logger.info("=========== Start Serving ===========")
 '''
 중간 생략
