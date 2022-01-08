@@ -19,6 +19,95 @@ comment: true
   - API 통신을 통해, 서버에서 데이터를 전달하면서 Web Application에 서빙 요청을 한다.
   - Web application은 요청을 받으면 분석 모듈에 정의된 serving 함수를 호출해 서빙을 완료하고, 서버로 결과를 전달한다.
 
+```python
+from flask import Flask, request
+from flask_cors import CORS
+from threading import Semaphore
+'''
+중간 생략
+'''
+
+# define the app
+app = Flask(__name__)
+CORS(app)
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.INFO)
+
+'''
+중간 생략
+'''
+
+# load module class
+target_class = aicommon.Utils.get_module_class(module_name, class_name, python_file_path)
+
+logger.info("============== Start Serving Process ==============")
+
+# create analyzer instance
+instance = target_class(param, logger)
+
+# load model
+instance.init_serving()
+
+# API route
+@app.route("/serving", methods=["POST"])
+def api():
+    """API function
+    serving API
+    """
+    message = request.json
+
+    logger.info(f"[Start Serving] service: {service_name},  input date : {message['date']}")
+
+    if "header" in message:
+        header = message["header"]
+    else:
+        header = None
+
+    if "body" in message:
+        body = message["body"]
+    else:
+        body = None
+
+    _header = None
+    _body = None
+    errno = -1
+    errmsg = None
+
+    try:
+        sem.acquire()
+        start_time = time.time()
+        _header, _body, errno, errmsg = instance.serving(header, body) # 서빙 함수 실행
+        elapsed_time = time.time() - start_time
+        logger.info(f"[End Serving] elapsed time : {str(elapsed_time)}")
+    except Exception as exception:
+        logger.exception(f"[Error] Unexpected exception during serving : {exception}")
+    finally:
+        sem.release()
+
+    results = {}
+    results["errno"] = errno
+
+    if errmsg is not None:
+        results["errmsg"] = errmsg
+
+    if _header is not None:
+        results["header"] = _header
+
+    if _body is not None:
+        results["body"] = _body
+
+    return json.dumps(results, cls=aicommon.JsonEncoder)
+
+'''
+이하생략
+'''
+
+if __name__ == "__main__":
+    logger.info("============== Run Flask app ==============")
+    # This is used when started by server.
+    app.run(host=py_config["serving_flask"]["host"], port=int(target_port), debug=True, use_reloader=False)
+```
+
 - 현재 서빙프로세스는 몇 가지 문제가 있다.
   - 유입되는 데이터를 순차 처리한다. 유입되는 트랜잭션 데이터가 많아지면 그만큼 inference 시간도 늘어나며, 1분 안에 serving을 못 할 위험성이 존재한다.
   - 병렬처리를 위한 파이썬 STL인 multiprocessing, concurrent.futures는 다음 이유로 사용할 수 없다.
