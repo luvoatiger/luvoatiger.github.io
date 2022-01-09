@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 동기화 프리미티브 Event와 Condition을 이용한 스레드 통신
+title: Queue와 동기화 프리미티브 Event, Condition을 이용한 생산자-소비자 패턴 구현
 date: 2022-01-05
-excerpt: "Thread communication using Event and Condition"
+excerpt: "Thread communication using Event, Condition"
 tags: [Concurrency]
 comment: true
 ---
