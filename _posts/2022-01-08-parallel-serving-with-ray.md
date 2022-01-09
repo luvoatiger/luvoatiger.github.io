@@ -345,7 +345,7 @@ for i in range(self.number_of_ray_actor)]
         task_per_actor = zip(splitted_input_param, self.serving_algorithm_actor_pool)
 
         # Task 파라미터에 담아 remote task를 호출한다.
-		with TimeLogger("ray serving takes : ", self.logger):
-            ray_serving_result = ray.get([acter.predict_by_ray.remote(task) for task, acter in task_per_actor])
+        with TimeLogger("ray serving takes : ", self.logger):
+            ray_serving_result = ray.get([actor.predict_by_ray.remote(task) for task, actor in task_per_actor])
             self.logger.info(f"ray serving result : {ray_serving_result}")
 ```
