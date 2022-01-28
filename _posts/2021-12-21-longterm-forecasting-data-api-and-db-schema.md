@@ -51,21 +51,6 @@ CREATE TABLE module_predicttion_result_table(
     create_dt timestamp with time zone NOT NULL DEFAULT now(),
     CONSTRAINT module_prediction_pk UNIQUE (inst_id, predict_day, training_day_start, training_day_end, stat_name)
 );
-COMMENT ON TABLE public.module_predicttion_result_table IS '장기예측모델 예측값 적재';
-
--- Column comments
-
-COMMENT ON COLUMN public.module_predicttion_result_table.predict_id IS 'predict_id';
-COMMENT ON COLUMN public.module_predicttion_result_table.training_day_start IS '학습데이터 시작일';
-COMMENT ON COLUMN public.module_predicttion_result_table.training_day_end IS '학습데이터 종료일';
-COMMENT ON COLUMN public.module_predicttion_result_table.predict_day IS '예측시작일';
-COMMENT ON COLUMN public.module_predicttion_result_table.sys_id IS 'aiops_system.sys_id';
-COMMENT ON COLUMN public.module_predicttion_result_table.type IS 'aiops_instance.type';
-COMMENT ON COLUMN public.module_predicttion_result_table.target_id IS 'aiops_instance.target_id';
-COMMENT ON COLUMN public.module_predicttion_result_table.inst_id IS 'aiops_instance.inst_id';
-COMMENT ON COLUMN public.module_predicttion_result_table.stat_name IS '지표명';
-COMMENT ON COLUMN public.module_predicttion_result_table.predict_values IS '예측값';
-COMMENT ON COLUMN public.module_predicttion_result_table.create_dt IS 'PG insert time';
  
  
 CREATE TABLE public.module_training_data_table (
@@ -79,16 +64,6 @@ CREATE TABLE public.module_training_data_table (
     "time" timestamp NOT NULL,
     create_dt timestamptz NOT NULL DEFAULT now(),
 
-    CONSTRAINT aiops_module_longterm_pkey PRIMARY KEY (seq)
+    CONSTRAINT module_training_data_pkey PRIMARY KEY (seq)
 );
-COMMENT ON TABLE publicmodule_training_data_table IS '장기부하예측 과거 데이터 적재';
-COMMENT ON COLUMN public.module_training_data_table.seq IS 'seq';
-COMMENT ON COLUMN public.module_training_data_table.sys_id IS 'aiops_system.sys_id';
-COMMENT ON COLUMN public.module_training_data_table."type" IS 'aiops_system.inst_type';
-COMMENT ON COLUMN public.module_training_data_table.target_id IS 'target_id or tx_code';
-COMMENT ON COLUMN public.module_training_data_table.txn IS 'txn';
-COMMENT ON COLUMN public.module_training_data_table."name" IS '지표명';
-COMMENT ON COLUMN public.module_training_data_table."value" IS '지표값';
-COMMENT ON COLUMN public.module_training_data_table."time" IS '지표값 발생시간';
-COMMENT ON COLUMN public.module_training_data_table.create_dt IS 'create_dt';
 ```
