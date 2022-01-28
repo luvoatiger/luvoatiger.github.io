@@ -3,7 +3,7 @@ layout: post
 title: 장기 부하 예측 데이터 API 및 DB 스키마 정의
 date: 2021-12-21
 excerpt: "Data API and DB Schema of Long Term Forecasting"
-tags: [long term forecasting]
+tags: [Time Series forecasting]
 comment: true
 ---
 
