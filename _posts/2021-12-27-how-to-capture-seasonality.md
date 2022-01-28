@@ -3,7 +3,7 @@ layout: post
 title: 시계열에서 고정된 주기의 계절성 포착하기
 date: 2021-12-27
 excerpt: "How to capture seasonality in time series"
-tags: [Time Series]
+tags: [Time Series Forecasting]
 comment: true
 ---
 
