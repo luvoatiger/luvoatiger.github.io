@@ -47,7 +47,7 @@ comment: true
 	-  예를 들어, 다음과 같습니다. 이런 업무들을 맡아서 처리했던 게 큰 것 같습니다.
 		-  [동시성 프레임워크 pathos을 이용한 학습 시간 단축](https://luvoatiger.github.io/parallel-training-with-pathos/)
 		-  [동시성 프레임워크 ray를 이용한 서빙 시간 단축](https://luvoatiger.github.io/parallel-serving-with-ray/)
-		-  [시스템 증설 과정 간소화하기](https://luvoatiger.github.io/how-to-expand-was-and-apm-using-docker/)
+		-  [WAS 인스턴스 증설 과정 간소화하기](https://luvoatiger.github.io/how-to-expand-was-and-apm-using-docker/)
 		-  [파이썬에서 R 사용하기](https://luvoatiger.github.io/how-to-use-r-on-python/)
 
 
