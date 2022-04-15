@@ -45,15 +45,16 @@ comment: true
 	-  AI 모델링과 조금 거리가 있지만, 솔루션을 고도화하는 작업들을 맡아서 진행하게 되는 경우가 많았습니다.
 	-  논문을 읽고 실 데이터에 맞게 구현하는 능력을 키우는 게 AI 개발자들에게 요구되는 역량이라면, 이런 작업들은 커리어를 망칠 수 있어 꺼려지기도 합니다. 하지만, 구축 및 학습/서비스의 안정성을 높여서 제품의 신뢰도를 높이는 데 중요한 역할을 하는 것들입니다.
 	-  예를 들어, 다음과 같습니다. 이런 업무들을 맡아서 처리했던 게 큰 것 같습니다.
-		-  병렬 프로그래밍(pathos/ray)을 이용한 학습/서빙 시간 단축
-		-  NVIDIA Driver/CUDA/cuDNN/Anaconda 버전 호환성 조사 및 오프라인 설치
-		-  pydantic/pandera를 이용한 Validation Check 및 DataFrame 테스트 코드 작성(진행중)
+		-  [동시성 프레임워크 pathos을 이용한 학습 시간 단축](https://luvoatiger.github.io/parallel-training-with-pathos/)
+		-  [동시성 프레임워크 ray를 이용한 서빙 시간 단축](https://luvoatiger.github.io/parallel-serving-with-ray/)
+		-  [시스템 증설 과정 간소화하기](https://luvoatiger.github.io/how-to-expand-was-and-apm-using-docker/)
+		-  [파이썬에서 R 사용하기](https://luvoatiger.github.io/how-to-use-r-on-python/)
 
 
 -   마지막으로, 경험들을 나누고 문서화 했기 때문인 것 같습니다.
 	- NVIDIA Driver/CUDA/cuDNN/Anaconda 오프라인 설치 매뉴얼을 작성하고, 2년차 후배 직원과 같이 구축해보는 시간을 가졌습니다. 처음에 제가 혼자 오프라인 설치 했을 때의 막막함을 잘 알기 때문입니다.
 	- 신입 사원들이 들어와서, 로그 보는 법 및 학슶/서빙 프로세스 등 기본적인 교육들을 진행했습니다.
-	- 이 블로그에 포스팅 된 내용(e.g. 병렬 프로그래밍 등,,,)은 회사에서 진행해서 팀 내에 공유했던 내용들을 기반으로 재작성했습니다.
+	- 이 블로그에 포스팅 된 내용([동시성 프레임워크 ray를 이용한 서빙 시간 단축](https://luvoatiger.github.io/parallel-serving-with-ray/))은 회사에서 진행해서 팀 내에 공유했던 내용들을 기반으로 재작성했습니다.
 
 
 # 나가며 - 인도하심을 믿고, 하루하루 충성하자.
