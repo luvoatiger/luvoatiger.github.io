@@ -46,7 +46,7 @@ comment: true
 -   반면 반드시 다시 돌아올 수 있다면, 해당 상태는 재귀 상태이다.
 -   일시성과 재귀성은 집단 특성이므로, 집단의 특정 상태가 일시적이거나 재귀적이면 다른 모든 상태도 일시적이거나 재귀적이게 된다.
 
-![recurrent](/imgs/recurent.png)
+![recurrent](/imgs/recurrent.png)
 
 ## 4) 흡수(absorbing)
 
