@@ -78,7 +78,10 @@ comment: true
 
 # 3. Stationary Distribution
 
--  다음 관계식을 만족하는 분포 $$\pi$$를 의미한다. $$ \pi(y) = ∫p(y|x)\pi(x)dx $$
+-  다음 관계식을 만족하는 분포 $$\pi$$를 의미한다.
+
+$$ \pi(y) = ∫p(y|x)\pi(x)dx $$
+
 -  즉, $$x$$가 stationary distribution에서 뽑히기 시작했으면, 다음 샘플인 $$y$$도 stationary distribution에서 뽑히게 된다. 여기서 함수 $$p(y|x)$$ 를 transition kernel이라고 부른다.
 -  stationary distribution은 없을 수도 있고, 하나가 아닐 수도 있다.
 
