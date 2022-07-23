@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 적분 예제
+title: 난수 생성 방법
 date: 2021-05-25
 excerpt: "6. Random Number Generation Methods"
 tags: [Bayesian]
@@ -9,7 +9,7 @@ comment: true
 
 
 
-﻿# 1. Inverse Transform Method
+# 1. Inverse Transform Method
 
 - 누적분포함수(cdf)의 형태를 구할 수 있을 때, 사용할 수 있는 방법. 누적분포함수의 역함수를 구한 다음에, 균일분포를 따르는 난수를 입력해주면 된다. 가장 간단한 방법이지만, 누적분포함수를 closed form 형태로 구할 수 있는 분포가 많지 않아서 일반적으로 사용하기 어렵다.
 
