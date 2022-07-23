@@ -15,12 +15,14 @@ comment: true
 
 -   현재 시점에서 특정 상태가 될 확률은 이전 시점 상태에만 영향을 받는 확률 과정을 말한다.
     $$ P(X_{t}|X_{t-1}, X_{t-2}, X_{t-3}, ... , X_{0}) = P(X_{t}|X_{t-1}) $$
+    
 -   각 상태끼리 이동할 확률을 행렬로 나타낸 것이 바로 전이행렬(transition matrix)이다.
     $$ \begin{bmatrix}
     P_{00} & \cdots & P_{0n} \\
     \vdots & \ddots & \vdots \\
     P_{n0} & \cdots & P_{nn}
     \end{bmatrix} $$
+
 -   $$P_{ij} = P(X_{n+1}=j|X_{n}=i), ∑_{j=0}^{\infty} P_{ij}=1$$이 된다.
 
 
@@ -75,8 +77,9 @@ comment: true
 
 # 3. Stationary Distribution
 
-- $$ \pi(y) = ∫p(y|x)\pi(x)dx $$인 분포 $\pi$ 를 의미한다. x가 stationary distribution에서 뽑히기 시작했으면, 다음 샘플인 y도 stationary distribution에서 뽑히게 된다. 
-- 여기서 함수 p(x, y)는 transition kernel이라고 부른다.
+- $$ \pi(y) = ∫p(y|x)\pi(x)dx $$인 분포 $\pi$ 를 의미한다. 
+- 즉, x가 stationary distribution에서 뽑히기 시작했으면, 다음 샘플인 y도 stationary distribution에서 뽑히게 된다. 
+- 여기서 함수 p(x, y)를 transition kernel이라고 부른다.
 - stationary distribution은 없을 수도 있고, 하나가 아닐 수도 있다.
 
 
@@ -94,6 +97,8 @@ $$ p(y|x)\pi(x) = p(x|y)\pi(y) $$
 # 5. Ergodic Markov Chain
 
 - Ergodic 마르코프 체인은 다음 식을 만족하는 마르코프 체인이다.
+  
   $$ \ plim_{n \to ∞} \frac{1}{n} \sum_{t=1}^N h(X_{t}) = ∫h(x)\pi(x)dx $$
+  
 - irreducible and aperiodic하면 ergodic 마르코프 체인이 된다.
 - 따라서, Posterior Distribution이 Detailed Balance Condition을 만족하는 Ergodic Markov Chain을 만들고, 해당 chain이 수렴한 다음에 샘플을 생성해서 평균을 취하면, 사후 분포 적분을 계산할 수 있다.
