@@ -8,24 +8,21 @@ comment: true
 ---
 
 
-
-
-
 # 1. 마르코프 체인
 
 -   현재 시점에서 특정 상태가 될 확률은 이전 시점 상태에만 영향을 받는 확률 과정을 말한다.
+
     $$ P(X_{t}|X_{t-1}, X_{t-2}, X_{t-3}, ... , X_{0}) = P(X_{t}|X_{t-1}) $$
     
 -   각 상태끼리 이동할 확률을 행렬로 나타낸 것이 바로 전이행렬(transition matrix)이다.
+
     $$ \begin{bmatrix}
     P_{00} & \cdots & P_{0n} \\
     \vdots & \ddots & \vdots \\
     P_{n0} & \cdots & P_{nn}
     \end{bmatrix} $$
 
--   $$P_{ij} = P(X_{n+1}=j|X_{n}=i), ∑_{j=0}^{\infty} P_{ij}=1$$이 된다.
-
-
+-   $$P_{ij} = P(X_{n+1}=j|X_{n}=i), ∑_{j=0}^{\infty} P_{ij}=1$$ 이 된다.
 
 
 # 2. 마르코프 체인의 상태 정리
