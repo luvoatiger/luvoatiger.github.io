@@ -22,7 +22,10 @@ comment: true
     P_{n0} & \cdots & P_{nn}
     \end{bmatrix} $$
 
--   $$P_{ij} = P(X_{n+1}=j|X_{n}=i)$$, $$∑_{j=0}^{\infty} P_{ij}=1 $$ 이 성립한다.
+-   다음 두 가지 식이 성립한다.
+
+    $$P_{ij} = P(X_{n+1}=j|X_{n}=i)$$
+    $$∑_{j=0}^{\infty} P_{ij}=1 $$
 
 
 # 2. 마르코프 체인의 상태 정리
