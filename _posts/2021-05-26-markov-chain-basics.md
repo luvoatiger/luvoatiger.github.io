@@ -22,7 +22,7 @@ comment: true
     P_{n0} & \cdots & P_{nn}
     \end{bmatrix} $$
 
--   $$ P_{ij} = P(X_{n+1}=j\middle|X_{n}=i), ∑_{j=0}^{\infty} P_{ij}=1 $$ 이 된다.
+-   $$ P_{ij} = P(X_{n+1}=j|X_{n}=i), ∑_{j=0}^{\infty} P_{ij}=1 $$ 이 된다.
 
 
 # 2. 마르코프 체인의 상태 정리
@@ -74,7 +74,7 @@ comment: true
 
 # 3. Stationary Distribution
 
--  $$ \pi(y) = ∫p(y\middle|x)\pi(x)dx $$ 를 만족하는 분포 $\pi$ 를 의미한다. 
+-  $$ \pi(y) = ∫p(y|x)\pi(x)dx $$ 를 만족하는 분포 $\pi$ 를 의미한다. 
 -  즉, x가 stationary distribution에서 뽑히기 시작했으면, 다음 샘플인 y도 stationary distribution에서 뽑히게 된다. 
 -  여기서 함수 p(x, y)를 transition kernel이라고 부른다.
 -  stationary distribution은 없을 수도 있고, 하나가 아닐 수도 있다.
@@ -96,7 +96,7 @@ $$ p(y|x)\pi(x) = p(x|y)\pi(y) $$
 
 -  Ergodic 마르코프 체인은 다음 식을 만족하는 마르코프 체인이다.
   
-  $$ \plim_{n \to ∞} \frac{1}{n} \sum_{t=1}^N h(X_{t}) = ∫h(x)\pi(x)dx $$
+  $$ plim_{n \to ∞} \frac{1}{n} \sum_{t=1}^N h(X_{t}) = ∫h(x)\pi(x)dx $$
   
 -  irreducible and aperiodic하면 ergodic 마르코프 체인이 된다.
 -  따라서, Posterior Distribution이 Detailed Balance Condition을 만족하는 Ergodic Markov Chain을 만들고, 해당 chain이 수렴한 다음에 샘플을 생성해서 평균을 취하면, 사후 분포 적분을 계산할 수 있다.
