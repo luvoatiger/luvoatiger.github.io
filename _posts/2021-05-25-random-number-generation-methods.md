@@ -36,13 +36,13 @@ $$ Therefore \quad F_{X}(x) \quad follows \quad uniform \quad distribution \quad
 
 ## 적용 아이디어
 
-- $P(X = x_{j})=p_{j}$를 따르는 이산확률분포를 생성하는 방법은 다음과 같다.
+- $$P(X = x_{j})=p_{j}$$를 따르는 이산확률분포를 생성하는 방법은 다음과 같다.
 
 $$ X = x_{j} \quad if \quad U = p_{j} \quad i.e. \quad F(x_{j-1}) \le U \le F(x_{j}) \quad where \quad F(x_{j}) = \sum_{i=0}^j {p_{i}}$$
 
 - 타겟 분포의 확률 구간에 따라, Uniform Random Variable에 확률 변수 값을 역으로 부여하는 아이디어이다. 즉, Uniform Random Variable이 확률이다.
 
-- 연속확률분포를 생성하려면 $U$를 생성하고, $F_{X}^{-1}$를 구해서 $U$를 입력하면 된다.
+- 연속확률분포를 생성하려면 $$U$$를 생성하고, $$F_{X}^{-1}$$를 구해서 $$U$$를 입력하면 된다.
 
 ```python
 # generate random variabe X with pmf p1 = 0.2, p2 = 0.15, p3 = 0.25, p4 = 0.4
@@ -62,11 +62,11 @@ dtype: int64
 
 # 2. Composition Approach
 
-- 타겟 분포가 다음과 같다고 하자. $α$에 따라서, 두 분포의 값이 섞인 분포이다.
+- 타겟 분포가 다음과 같다고 하자. $$α$$에 따라서, 두 분포의 값이 섞인 분포이다.
 
 $$ P(X = j) = p_{j} =α p_{j}^{(1)} + (1-α)p_{j}^{(2)} $$
 
-- 이 분포는 $α$ 확률로 $p_{j}^{(1)}$ 그리고 $(1-α)$ 확률로 $p_{j}^{(2)}$가 된다. 따라서, 타겟 확률변수열은 $α$ 확률로 $X_{1}$, $(1-α)$ 확률로 $X_{2}$가 된다. 여기서 $X_{1}$은 $p_{j}^{(1)}$을 따르는 확률변수이고, $X_{2}$는 $(1-α)p_{j}^{(2)}$를 따르는 확률 변수이다.
+- 이 분포는 $$α$$ 확률로 $$p_{j}^{(1)}$$ 그리고 $$(1-α)$$ 확률로 $$p_{j}^{(2)}$$가 된다. 따라서, 타겟 확률변수열은 $$α$$ 확률로 $$X_{1}$$, $$(1-α)$$ 확률로 $$X_{2}$$가 된다. 여기서 $$X_{1}$$은 $$p_{j}^{(1)}$$을 따르는 확률변수이고, $$X_{2}$$는 $$(1-α)p_{j}^{(2)}$$를 따르는 확률 변수이다.
 
 ```python
 # 예제
@@ -108,19 +108,19 @@ Name: target, dtype: int64
 
 # 3. Acceptance Rejection Technique
 
-- 많이 사용되는 방법이다. Rejection Sampling 이라고도 부른다. 샘플링하려고 하는 타겟 분포 $p$의 확률 밀도 함수를 알고 있지만, p에서 샘플링하기 어려울 떄 사용한다.
+- 많이 사용되는 방법이다. Rejection Sampling 이라고도 부른다. 샘플링하려고 하는 타겟 분포 $$p$$의 확률 밀도 함수를 알고 있지만, $$p$$에서 샘플링하기 어려울 떄 사용한다.
 
-- Rejection Sampling은 $q$에서 샘플을 추출하고, 해당 샘플의 분포를 $p$에 맞게 수정하는 방법이다. 구체적으로는 샘플링하기 쉬운 분포 $q$에서 샘플을 추출한 다음, $q$에서 추출된 샘플들이 $p$에서 추출됐다고 봐도 되는 샘플이면 채택하고 그렇지 않고 그대로 $q$에서 나왔다고 봐야한다면 기각하게 된다.
+- Rejection Sampling은 $q$에서 샘플을 추출하고, 해당 샘플의 분포를 $$p$$에 맞게 수정하는 방법이다. 구체적으로는 샘플링하기 쉬운 분포 $$q$$에서 샘플을 추출한 다음, $$q$$에서 추출된 샘플들이 $$p$$에서 추출됐다고 봐도 되는 샘플이면 채택하고, 그대로 $$q$$에서 나왔다고 봐야한다면 기각하게 된다.
 
 - MCMC에서 나오는 Gibbs Sampler, Metropolis-Hastings에서도 비슷한 수식과 논리가 전개되므로 이 알고리즘은 증명까지 알아두는 게 좋다.
 
 ## 알고리즘 세팅
 
-- Assume that it is hard to generate $X$ from the target density $p$
+- Assume that it is hard to generate $$X$$ from the target density $$p$$
 
-- Assume that it is easy to generate $Z$ from the density $q$ which satisfies that $sup\frac{q(x)}{p(x)} \le \frac{1}{π}$. 다르게 표현하면, $π \le sup\frac{p(x)}{q(x)}$ 일 것이다.
+- Assume that it is easy to generate $$Z$$ from the density $$q$$ which satisfies that $$sup\frac{q(x)}{p(x)} \le \frac{1}{π}$$. 다르게 표현하면, $$π \le sup\frac{p(x)}{q(x)}$$ 일 것이다.
 
-- Accept $Z_{i}$ as a target random variable $X_{i} \quad if \quad U_{i} \le \frac{πp(Z_{i})}{q(Z_{i})}$
+- Accept $$Z_{i}$$ as a target random variable $$X_{i} \quad if \quad U_{i} \le \frac{πp(Z_{i})}{q(Z_{i})}$$
 
 $$Where \quad Z_{1}, Z_{2}, Z_{3}, ... \overset{\underset{\mathrm{iid}}{}}{\thicksim} q \quad \perp \quad U_{1}, U_{2}, U_{3}, ... \overset{\underset{\mathrm{iid}}{}}{\thicksim} Uniform(0, 1) $$
 
@@ -146,9 +146,9 @@ $$ P\left(U_{i} \le \frac{\pi p(z_{i})}{q(z_{i})}\right) = E_{Z}\left[P\left(U_{
 
   
 
-### Accepted된 난수 $U$가 $X$의 분포를 따라가는 이유
+### Accepted된 난수 $$U$$가 $$X$$의 분포를 따라가는 이유
 
-- X의 분포함수는 $F_{X}(x)$이다. 그리고 X는 첫 번째에 바로 Accept될 수도 있고, Accept되지 않다가 한참 뒤에 Accpet 될 수도 있다. 따라서, 각 경우의 확률을 모두 합해야 한다. 먼저, 뽑힌 Zi가 샘플 Xi로 채택될 확률은 다음과 같다.
+- X의 분포함수는 $$F_{X}(x)$$이다. 그리고 X는 첫 번째에 바로 Accept될 수도 있고, Accept되지 않다가 한참 뒤에 Accpet 될 수도 있다. 따라서, 각 경우의 확률을 모두 합해야 한다. 먼저, 뽑힌 Zi가 샘플 Xi로 채택될 확률은 다음과 같다.
 
 $$ (1-\pi)^{i-1}P\left(U_{i} \le \frac{\pi p(z_{i})}{q(z_{i})}, Z_{i} \le x \right)$$
 
