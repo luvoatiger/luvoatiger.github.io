@@ -64,4 +64,4 @@ plot_markov_chain_convergence(state_space, states, sample_size)
 
 ![convergence](/imgs/convergence.png)
 
-- 전이 횟수가 많아지면서, 확률이 일정한 값으로 수렴하는 것으 알 수 있다.
+- 전이 횟수가 많아지면서, 확률이 일정한 값으로 수렴하는 것 알 수 있다.
