@@ -84,8 +84,8 @@ $$ \pi(y) = ∫p(y|x)\pi(x)dx $$
 
 -  즉, $$x$$가 stationary distribution에서 뽑히기 시작했으면, 다음 샘플인 $$y$$도 stationary distribution에서 뽑히게 된다. 
 -  stationary distribution은 없을 수도 있고, 하나가 아닐 수도 있다.
--  여기서 함수 $$p(y|x)$$ 를 transition kernel이라고 부른다.
-
+-  여기서 다음 함수를 transition kernel이라고 부른다.
+$$p(y|x)$$
 
 
 # 4. Detailed Balance Condition
