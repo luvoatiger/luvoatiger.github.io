@@ -33,7 +33,7 @@ comment: true
 
 ## 1) 도달가능 & 교통가능 & 집단(Accessible & Communicative & Class)
 
--   임의의 n에 대해서 $$P_{ij}^{(n)} \ge 0$$이면, '상태 j는 상태 i로부터 도달 가능'하다고 한다.
+-   임의의 $$n$$에 대해서 $$P_{ij}^{(n)} \ge 0$$이면, '상태 $$j$$는 상태 $$i$$로부터 도달 가능'하다고 한다.
 -   이 관계가 역으로도 성립하면, 두 상태는 서로 교통 가능하다.
 -   서로 교통 가능한 상태들을 하나의 집단으로 군집화 할 수 있다.
 
@@ -45,7 +45,7 @@ comment: true
 
 ## 3) 일시(transient) & 재귀(Recurrent)
 
--   현재 상태를 체인이 전이되면서 다시 돌아오지 못할 수 있다면 일시 상태이다. 즉, 상태 i로부터 상태 j는 도달 가능하지만, 상태 j로부터 상태 i로 도달할 수 없는 경우이다.
+-   현재 상태를 체인이 전이되면서 다시 돌아오지 못할 수 있다면 일시 상태이다. 즉, 상태 $$i$$로부터 상태 $$j$$는 도달 가능하지만, 상태 $$j$$로부터 상태 $$i$$로 도달할 수 없는 경우이다.
 -   반면 반드시 다시 돌아올 수 있다면, 해당 상태는 재귀 상태이다.
 -   일시성과 재귀성은 집단 특성이므로, 집단의 특정 상태가 일시적이거나 재귀적이면 다른 모든 상태도 일시적이거나 재귀적이게 된다.
 
@@ -58,10 +58,10 @@ comment: true
 
 ## 5) 주기(periodic) & 비주기(aperiodic)
 
--   상태 i에 대한 주기는 n = t, 2t, 3t... 이외의 다른 값에 대해서 $$P_{ij}^{(n)} = 0$$을 만족하는 가장 큰 정수 t이다.
--   즉, 상태 i에서 상태 i로 돌아오기까지 2, 4, 6단계가 걸린다면 홀수 n에 대해서 $$P_{ij}^{(n)} = 0$$이므로 주기는 2이다.
--   반면, 주기 1을 갖게 되면 비주기 상태이다. 즉, 어떤 과정이 s와 s + 1 단계에서 상태 i에 있을 수 있는 연속된 수 s, s + 1이 존재하는 경우를 말한다.
--   주기성도 집단 특성이다. 상태 i가 주기 t를 가지면, 해당 집단의 모든 상태는 주기 t를 갖는다.
+-   상태 $$i$$에 대한 주기는 $$n = t, 2t, 3t...$$ 이외의 다른 값에 대해서 $$P_{ij}^{(n)} = 0$$을 만족하는 가장 큰 정수 t이다.
+-   즉, 상태 $$i$$에서 상태 $$i$$로 돌아오기까지 $$2, 4, 6, ... $$단계가 걸린다면 $$n \quad = \quad 2k - 1 \quad, k = 1,2,3...$$에 대해서 $$P_{ij}^{(n)} = 0$$이므로 주기는 $$2$$이다.
+-   반면, 주기 $$1$$을 갖게 되면 비주기 상태이다. 즉, 어떤 과정이 $$s$$와 $$s + 1$$ 단계에서 상태 $$i$$에 있을 수 있는 연속된 수 $$s, s + 1$$이 존재하는 경우를 말한다.
+-   주기성도 집단 특성이다. 상태 $$i$$가 주기 $$t$$를 가지면, 해당 집단의 모든 상태는 주기 $$t$$를 갖는다.
 
 ![aperiodic](/imgs/aperiodic.png)
 
@@ -69,7 +69,7 @@ comment: true
 
 -  유한 상태 마르코프 체인에서 비주기적인(aperiodic) 재귀상태(recurrent)를 말한다.
 -  모든 상태가 에르고딕하면 비주기적이고 서로 교통 가능하므로 전체 체인은 irreducible and aperiodic한 마르코프 체인이 되며, 이를  에르고딕 마르코프 체인(Ergodic Markov Chain)이라 한다.
--  이 때, n단계 전이 확률은 특정한 안정-상태 확률(steady-state probability)로 수렴하게 된다.
+-  이 때, $$n$$단계 전이 확률은 특정한 안정-상태 확률(steady-state probability)로 수렴하게 된다.
 
 ![ergodic](/imgs/ergodic.png)
 
@@ -78,11 +78,11 @@ comment: true
 
 # 3. Stationary Distribution
 
--  다음 관계식을 만족하는 분포 π를 의미한다. 
+-  다음 관계식을 만족하는 분포 $$\pi$$를 의미한다. 
 
 $$ \pi(y) = ∫p(y|x)\pi(x)dx $$
 
--  즉, x가 stationary distribution에서 뽑히기 시작했으면, 다음 샘플인 y도 stationary distribution에서 뽑히게 된다. 
+-  즉, $$x$$가 stationary distribution에서 뽑히기 시작했으면, 다음 샘플인 $$y$$도 stationary distribution에서 뽑히게 된다. 
 -  여기서 함수 $$p(y|x)$$를 transition kernel이라고 부른다.
 -  stationary distribution은 없을 수도 있고, 하나가 아닐 수도 있다.
 
@@ -90,11 +90,11 @@ $$ \pi(y) = ∫p(y|x)\pi(x)dx $$
 
 # 4. Detailed Balance Condition
 
-- Transition Kernel p와 pdf π가 다음 관계가 있으면 Detailed Balance Condition을 만족한다고 한다.
+- Transition Kernel $$p$$와 pdf $$π$$가 다음 관계가 있으면 Detailed Balance Condition을 만족한다고 한다.
 
 $$ p(y|x)\pi(x) = p(x|y)\pi(y) $$
 
--  Detailed Balance Condition을 만족하면, 분포 π가 $X_{t}$의 Stationary Distribution이 된다.
+-  Detailed Balance Condition을 만족하면, 분포 $$π$$가 $$X_{t}$$의 Stationary Distribution이 된다.
 
 
 
