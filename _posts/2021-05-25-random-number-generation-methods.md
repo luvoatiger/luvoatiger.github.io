@@ -2,7 +2,7 @@
 layout: post
 title: 난수 생성 방법
 date: 2021-05-25
-excerpt: "6. Random Number Generation Methods"
+excerpt: "Random Number Generation Methods"
 tags: [Bayesian]
 comment: true
 ---
