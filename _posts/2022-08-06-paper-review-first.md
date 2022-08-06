@@ -7,9 +7,7 @@ tags: [Bayesian]
 comment: true
 ---
 
-# 
-
-﻿# 논문 리뷰 (1) : Bayesian Time Series Forecasting with Change Point and Anomaly Detection - Model Overview
+# 논문 리뷰 (1) : Bayesian Time Series Forecasting with Change Point and Anomaly Detection - Model Overview
 
 ## 개요
 
