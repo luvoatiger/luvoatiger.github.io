@@ -22,10 +22,12 @@ Bernoulli Distribution, Normal Distribution, Likelihood Function, Convergence, P
 ## 시계열 성분 분해
 
 관측된 시계열 데이터는 여러 방식으로 모델링 될 수 있다. Random Walk 형태로 표현될 수도 있고, (S)AR(I)MA 같은 선형 확률 과정 형태로 표현될 수도 있다. 그 중 시계열 성분 분해는 관측된 시계열이 트렌드, 계절성, 그 외 나머지의 형태로 표현하는 방법이다. 트렌드는 장기적인 흐름을 말하며, 계절성은 주기를 가지고 반복되는 패턴을 말한다.  예를 들어 아이스크림 판매량은 더운 날에 많이 팔리고 추운 날에 덜 팔린다고 기대할 수 있으므로, 트렌드는 증감을 반복할 것이고 계절성은 1년  주기의 sin, cos의 합이라 가정하고 수식을 세울 수 있다.
+
 $$\begin{matrix}
 Y(t) = T(t) + S(t) + R(t) \quad where  \\
 T(t) = \mu, \quad S(t) = sin(2\pi ft) + cos(2\pi ft), \quad R(t) =\epsilon_{t}
 \end{matrix}$$
+
 논문 저자들은 성분 분해를 조금 더 확장시켜서, 트렌드와 계절성 그리고 나머지 항 이외에 Change Point와 Anomaly Point까지 추가했다. 
 
 ![decomposition](/imgs/decomposition.PNG)
@@ -41,17 +43,20 @@ $$Y(t) = f(T(t), S(t), A(t), C(t), R(t)) $$
 단순한 모형부터 시작해서 모델을 발전시켜보자. 먼저, 시계열이 평균 근처에서 진동하는 형태라고 가정해보자. 그렇다면, 다음과 같아진다.
 
 $$Y(t) = \mu + \sigma^{2}$$ 
+
 평균은 $$\mu$$, 진동은 $$\sigma^{2}$$으로 표시했다.  자, 이 모형이 타당한가?
 
 그렇지 않다. IT 시스템은 부하량에 따라 계속 상태가 바뀌므로 평균도 시간이 지나면서 변동하게 된다. 그리고 계절성이 모형에 존재하지 않는다. 따라서, 시간 정보와 계절성을 추가하자. 
 
 $$Y(t) = \mu_{t} + \gamma_{t} + \sigma^{2}$$
+
 계절성은 $$\gamma$$로 표시했다. 자, 이 모형은 타당한가?
 
 그렇지 않다. 현재 시점의 평균은 보통 이전 시점의 영향을 받게 된다. 예를 들어, 메모리 사용량은 누수가 발생하면 이전 시점과 동일하거나 값이 커진다. 따라서, 평균 사이의 관계를 추가해줘야 한다. 
 
 $$Y(t) = \mu_{t} + \gamma_{t} + \sigma_{y}^{2}$$
 $$\mu_{t} = \mu_{t-1} + \delta_{t} + \sigma_{\mu}^{2}$$
+
 이제 모형은 두 가지 식으로 구성된다. 평균 사이의 관계는 $$\delta$$로 표시했다. 자, 모형은 이제 타당한가?
 
 그렇지 않다. 먼저, Anomaly Point와 Change Point가 없다. 이들은 데이터에 내재된 일반적인 Random Noise보다 보통 훨씬 크게 변화하므로, 다른 형태의 변동을 가져야 한다. 그리고 Seasonality도 정의에 의해서 일정한 주기를 가지는 성분이므로, Seasonality 사이의 관계가 있다. 따라서, 이들을 추가하면 식은 다음과 같아진다.
@@ -60,6 +65,7 @@ $$Y(t) = \mu_{t} + \gamma_{t} + \begin{cases} \epsilon_{t},   \; if \; not \; an
 o_{t}, \; if \; anomaly \end{cases}$$
 $$\mu_{t} = \mu_{t-1} + \delta_{t} + \begin{cases} u_{t}, \; if \; not \; change \; point \\ r_{t}, \; if \; change \; point \end{cases}$$
 $$\gamma_{t} = \sum_{s=1}^{S-1}\gamma_{t-s} + w_{t}$$
+
 모형은 이제 타당한가?
 
 대부분의 성분을 모델에 포함했다. 하지만, 다른 성분들도 변하는 만큼 slope를 의미하는 $$\delta$$ 에도 관계가 있다고 보는 게 자연스럽다. 이를 추가하자. 
