@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 논문 리뷰 - Bayesian Time Series Forecasting with Change Point and Anomaly Detection
+title: 논문 리뷰 (1) - Bayesian Time Series Forecasting with Change Point and Anomaly Detection
 date: 2022-08-06
 excerpt: "1. Model Overview"
 tags: [Bayesian]
@@ -54,6 +54,7 @@ $$ Y(t) = \mu_{t} + \gamma_{t} + \sigma^{2} $$
 그렇지 않다. 현재 시점의 평균은 보통 이전 시점의 영향을 받게 된다. 예를 들어, 메모리 사용량은 누수가 발생하면 이전 시점과 동일하거나 값이 커진다. 따라서, 평균 사이의 관계를 추가해줘야 한다. 
 
 $$ Y(t) = \mu_{t} + \gamma_{t} + \sigma_{y}^{2} $$
+
 $$ \mu_{t} = \mu_{t-1} + \delta_{t} + \sigma_{\mu}^{2} $$
 
 이제 모형은 두 가지 식으로 구성된다. 평균 사이의 관계는 $$\delta$$로 표시했다. 자, 모형은 이제 타당한가?
@@ -76,7 +77,7 @@ o_{t}, \quad if \quad anomaly \end{cases} $$
 
 $$ \mu_{t} = \mu_{t-1} + \delta_{t} + \begin{cases} u_{t}, \quad if \quad not \quad change \quad point \\ r_{t}, \quad if \quad change \quad point \end{cases} $$
 
-$$ \gamma_{t} = \sum_{s=1}^{S-1}\gamma_{t-s} + w_{t}, $$
+$$ \gamma_{t} = \sum_{s=1}^{S-1}\gamma_{t-s} + w_{t} $$
 
 $$ \delta_{t} = \delta_{t-1} + v_{t} $$
 
