@@ -62,7 +62,9 @@ $$ \mu_{t} = \mu_{t-1} + \delta_{t} + \sigma_{\mu}^{2} $$
 
 $$ Y(t) = \mu_{t} + \gamma_{t} + \begin{cases} \epsilon_{t}, \quad if \quad not \quad anomaly\\
 o_{t}, \quad if \quad anomaly \end{cases} $$
+
 $$ \mu_{t} = \mu_{t-1} + \delta_{t} + \begin{cases} u_{t}, \quad if \quad not \quad change \quad point \\ r_{t}, \quad if \quad change \quad point \end{cases} $$
+
 $$ \gamma_{t} = \sum_{s=1}^{S-1}\gamma_{t-s} + w_{t} $$
 
 모형은 이제 타당한가?
@@ -71,8 +73,11 @@ $$ \gamma_{t} = \sum_{s=1}^{S-1}\gamma_{t-s} + w_{t} $$
 
 $$ Y(t) = \mu_{t} + \gamma_{t} + \begin{cases} \epsilon_{t},   \quad if \quad not \quad anomaly\\
 o_{t}, \quad if \quad anomaly \end{cases} $$
+
 $$ \mu_{t} = \mu_{t-1} + \delta_{t} + \begin{cases} u_{t}, \quad if \quad not \quad change \quad point \\ r_{t}, \quad if \quad change \quad point \end{cases} $$
-$$ \gamma_{t} = \sum_{s=1}^{S-1}\gamma_{t-s} + w_{t} $$
+
+$$ \gamma_{t} = \sum_{s=1}^{S-1}\gamma_{t-s} + w_{t}, $$
+
 $$ \delta_{t} = \delta_{t-1} + v_{t} $$
 
 마지막으로 생각해보자. 트렌드와 계절성 모두 추가했고 변경점과 이상치도 추가했으며 이들 사이의 관계도 정의했으므로, 모델은 적절해보인다. 따라서, 위의 모델을 최종적으로 사용하면 될 것 같다.
