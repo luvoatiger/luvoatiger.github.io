@@ -28,7 +28,7 @@ T(t) = \mu, \quad S(t) = sin(2\pi ft) + cos(2\pi ft), \quad R(t) =\epsilon_{t}
 \end{matrix}$$
 논문 저자들은 성분 분해를 조금 더 확장시켜서, 트렌드와 계절성 그리고 나머지 항 이외에 Change Point와 Anomaly Point까지 추가했다. 
 
-![decomposition](/imgs/decomposition.png)
+![decomposition](/imgs/decomposition.PNG)
 
 즉, 관측된 시계열은 다섯 가지 성분들의 함수로 가정한다. 대문자들은 Trend, Seasonality, Anomaly Point, Change Point, Remainder이고, 이들과 시계열 사이의 어떤 관계를 f로 표시했다.
 
