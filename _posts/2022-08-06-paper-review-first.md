@@ -33,7 +33,7 @@ $$ T(t) = \mu, \quad S(t) = sin(2\pi ft) + cos(2\pi ft), \quad R(t) =\epsilon_{t
 
 $$ Y(t) = f(T(t), S(t), A(t), C(t), R(t)) $$
 
-그렇다면, 함수 f를 어떻게 설정해야 할까?
+여기서 함수 f가 바로 모델이 된다. 그렇다면, 함수 f를 어떻게 설정해야 할까?
 
 # Model Overview
 
