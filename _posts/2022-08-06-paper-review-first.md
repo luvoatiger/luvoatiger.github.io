@@ -66,7 +66,7 @@ o_{t}, \quad if \quad anomaly \end{cases} $$
 
 $$ \mu_{t} = \mu_{t-1} + \delta_{t} + \begin{cases} u_{t}, \quad if \quad not \quad change \quad point \\ r_{t}, \quad if \quad change \quad point \end{cases} $$
 
-$$ \gamma_{t} = \sum_{s=1}^{S-1}\gamma_{t-s} + w_{t} $$
+$$ \gamma_{t} = -\sum_{s=1}^{S-1}\gamma_{t-s} + w_{t} $$
 
 모형은 이제 타당한가?
 
@@ -77,7 +77,7 @@ o_{t}, \quad if \quad anomaly \end{cases} $$
 
 $$ \mu_{t} = \mu_{t-1} + \delta_{t} + \begin{cases} u_{t}, \quad if \quad not \quad change \quad point \\ r_{t}, \quad if \quad change \quad point \end{cases} $$
 
-$$ \gamma_{t} = \sum_{s=1}^{S-1}\gamma_{t-s} + w_{t} $$
+$$ \gamma_{t} = -\sum_{s=1}^{S-1}\gamma_{t-s} + w_{t} $$
 
 $$ \delta_{t} = \delta_{t-1} + v_{t} $$
 
