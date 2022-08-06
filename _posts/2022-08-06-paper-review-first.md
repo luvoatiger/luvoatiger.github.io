@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 논문 리뷰 (1): Bayesian Time Series Forecasting with Change Point and Anomaly Detection
+title: Paper Implementation - Bayesian Time Series Forecasting with Change Point and Anomaly Detection
 date: 2022-08-06
 excerpt: "1. Model Overview"
 tags: [Bayesian]
