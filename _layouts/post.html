@@ -39,8 +39,7 @@ layout: compress
             </div>
         </div>
         {% if page.comments and site.disqus_shortname %}<section id="disqus_thread" class="animated fadeInUp"></section><!-- /#disqus_thread -->{% endif %}
-    </header>
-    <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="col-lg-8 col-md-10 mx-auto">
         <hr />
         <script src="https://giscus.app/client.js"
                 data-repo="luvoatiger/luvoatiger.github.io"
@@ -58,6 +57,7 @@ layout: compress
                 async>
         </script>
     </div>
+    </header>
     {% include scripts.html %}
     {% if site.mathjax == true %}
     <!-- MathJax -->
