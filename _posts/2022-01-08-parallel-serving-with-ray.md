@@ -15,7 +15,7 @@ comment: true
 - 실시간 모니터링 서비스는 학습된 모델을 이용해 1분 단위로 수행되며, 구체적으로 다음과 같다.
   - 서버에서 Web Application(e.g. Flask, Django)을 실행시킨다.
   - Application에서 분석 모듈 클래스의 인스턴스를 생성하고, 초기화한다.
-  - 분석 모듈 인스턴스에서 사용할 해당 타겟(instance, infra, code) 알고리즘 모델들을 로딩한다.
+  - 분석 모듈 인스턴스에서 사용할 알고리즘 모델들을 로딩한다.
   - API 통신을 통해, 서버에서 데이터를 전달하면서 Web Application에 서빙 요청을 한다.
   - Web application은 요청을 받으면 분석 모듈에 정의된 serving 함수를 호출해 서빙을 완료하고, 서버로 결과를 전달한다.
 
@@ -38,7 +38,7 @@ app.logger.setLevel(logging.INFO)
 '''
 
 # load module class
-target_class = aicommon.Utils.get_module_class(module_name, class_name, python_file_path)
+target_class = get_module_class(module_name, class_name, python_file_path)
 
 logger.info("============== Start Serving Process ==============")
 
@@ -46,57 +46,18 @@ logger.info("============== Start Serving Process ==============")
 instance = target_class(param, logger)
 
 # load model
-instance.init_serving()
+instance.init_serve()
 
 # API route
-@app.route("/serving", methods=["POST"])
-def api():
-    """API function
-    serving API
-    """
-    message = request.json
-
-    logger.info(f"[Start Serving] service: {service_name},  input date : {message['date']}")
-
-    if "header" in message:
-        header = message["header"]
-    else:
-        header = None
-
-    if "body" in message:
-        body = message["body"]
-    else:
-        body = None
-
-    _header = None
-    _body = None
-    errno = -1
-    errmsg = None
-
+@app.route("/serve", methods=["POST"])
+def serve():
     try:
-        sem.acquire()
         start_time = time.time()
         _header, _body, errno, errmsg = instance.serving(header, body) # 서빙 함수 실행
         elapsed_time = time.time() - start_time
         logger.info(f"[End Serving] elapsed time : {str(elapsed_time)}")
     except Exception as exception:
         logger.exception(f"[Error] Unexpected exception during serving : {exception}")
-    finally:
-        sem.release()
-
-    results = {}
-    results["errno"] = errno
-
-    if errmsg is not None:
-        results["errmsg"] = errmsg
-
-    if _header is not None:
-        results["header"] = _header
-
-    if _body is not None:
-        results["body"] = _body
-
-    return json.dumps(results, cls=aicommon.JsonEncoder)
 
 '''
 이하생략
@@ -105,7 +66,7 @@ def api():
 if __name__ == "__main__":
     logger.info("============== Run Flask app ==============")
     # This is used when started by server.
-    app.run(host=py_config["serving_flask"]["host"], port=int(target_port), debug=True, use_reloader=False)
+    app.run(host=host, port=int(port), debug=True, use_reloader=False)
 ```
 
 - 현재 서빙프로세스는 몇 가지 문제가 있다.
@@ -261,11 +222,6 @@ print(results)  # prints [2, 3, 4, 5, 6]
 *   ray를 import하고, 클래스에 데코레이터를 붙여준다.
 
 ```python
-from algorithms import aimodel
-from common import aicommon
-from common import constants as bc
-from common.error_code import Errors
-
 import ray
 
 @ray.remote
@@ -308,7 +264,6 @@ Ray Actor클래스들의 Pool을 만들고, 모듈 초기화 및 모델 로드 T
 '''
 생략
 '''
-from algorithms import Algorithm
 import ray
 
 ray.init()
@@ -328,7 +283,7 @@ for i in range(self.number_of_ray_actor)]
 '''
 이하 생략
 '''
-    def serving(self, header, data_dict):
+    def serve(self, header, data_dict):
         # API에서 호출되는 서빙 함수
         self.logger.info("=========== Start Serving ===========")
 '''

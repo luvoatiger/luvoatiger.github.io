@@ -14,12 +14,11 @@ comment: true
 - 사용자가 대시보드에서 sys-e2e 모듈을 학습 요청하면, 서버가 학습 프로세스를 실행시킨다.
 
 ```python
-import parser
-
+import logging
 '''
 중간생략
 '''
-target_class = aicommon.Utils.get_module_class(
+target_class = get_module_class(
     module_name, class_name, str(Path(py_path) / "analyzer")
 )
 instance = target_class(param, logger) # 분석 모듈 인스턴스 생성
@@ -44,7 +43,6 @@ try:
 
 except MemoryError as error:
     logger.exception("트레이닝 과정에 MemoryError 오류가 발생하였습니다.", error)
-    aicommon.Utils.print_memory_usage(logger)
 
 except:
     logger.exception("트레이닝 과정에 오류가 발생하였습니다.")
@@ -159,9 +157,9 @@ class Analyzer(aimodule.AIModule):
         for i in range(len(target)):
             xcode = target[i]
 
-            self.logger.info(f"[training] preprocessing data of target no.{xcode}")
-            if len(df_1day_all) > 0:
-                df_xcd = df_1day_all.query(f"{self.target_id_field} == '{xcode}'")
+            self.logger.info(f"[training] preprocessing data of target {xcode}")
+            if len(df_all) > 0:
+                df_xcd = df_all.query(f"{xcode} == '{xcode}'")
                 df_xcd = df_xcd.set_index("time")
                 df_xcd = df_xcd.interpolate()
 
@@ -183,14 +181,6 @@ class Analyzer(aimodule.AIModule):
 
             pool.close()
             pool.join())
-
-            models = {}
-            for element in txn_models:
-                if element is None:
-                    continue
-                else:
-                    for xcode in list(element.keys()):
-                        models[xcode] = element[xcode]
 
             self.logger.info(
                 "[training] finish postprocessing  multiprocessed model"
