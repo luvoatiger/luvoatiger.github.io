@@ -8,62 +8,22 @@ comment: true
 ---
 
 # 개요
-- 모니터링 시스템 전체를 실시간 이상 탐지하는 모듈(sys-e2e)의 학습 시간을 pathos 라이브러리로 단축시켰던 업무 경험을 정리하는 포스팅
+- 소프트웨어 특정 기능의 학습 시간을 pathos 라이브러리로 단축시켰던 업무 경험을 정리하는 포스팅
 
 ## 학습 과정 구조
-- 사용자가 대시보드에서 sys-e2e 모듈을 학습 요청하면, 서버가 학습 프로세스를 실행시킨다.
-
-```python
-import logging
-'''
-중간생략
-'''
-target_class = get_module_class(
-    module_name, class_name, str(Path(py_path) / "analyzer")
-)
-instance = target_class(param, logger) # 분석 모듈 인스턴스 생성
-
-header = None
-body = None
-errno = 0
-errmsg = None
-
-logger.info("============== Start Training ==============")
-logger.info("Train meta info (%s)", param)
-
-try:
-    instance.init_training()
-    header, body, errno, errmsg = instance.training(stat_logger) # 분석 모듈에 정의된 training 함수 호출
-
-'''
-후처리
-'''
-
-    instance.end_training() # 학습 종료
-
-except MemoryError as error:
-    logger.exception("트레이닝 과정에 MemoryError 오류가 발생하였습니다.", error)
-
-except:
-    logger.exception("트레이닝 과정에 오류가 발생하였습니다.")
-
-logger.info("============== End Training ==============")
-```
-
-
-- sys-e2e 인스턴스 학습 로직은 다음과 같다. 아래는 pseudo code이다.
-
 ```python
 # 기존 로직
 class Analyzer:
-    def training(logger):
+    def train(logger):
         def load_data_and_get_target(csv_list) # 데이터 로딩 및 학습 대상 선정
         def algorithms.fit() # 알고리즘 학습
         def save() # 모델 저장
+```
 
+```python
 # 신규 로직
 class Analyzer:
-    def training(logger):
+    def train(logger):
         def load_data_and_get_target(csv_list) # 데이터 로딩 및 학습 대상 선정
         def map_target_and_data() # 학습 대상과 해당 데이터 매핑. 순차처리일 경우, 이 과정에서 각 대상별 학습
         def algorithms.fit() # 여기서는 병렬학습
@@ -127,71 +87,59 @@ current_process = psutil.Process()
 current_process.cpu_affinity(list(range(psutil.cpu_count(logical=False))))
 
 # 중간생략
-class Analyzer(aimodule.AIModule):
+class Analyzer():
     def __init__(self, config, logger):
     	# 설정값, 로거 입력
         self.config = config
         self.logger = logge
 
         # 병렬처리 정보
-        self.number_of_child_processes = int(psutil.cpu_count(logical=False) * 0.3)
+        self.number_of_child_processes = int(psutil.cpu_count(logical=False))
 
         # 분석 모델 인스턴스 생성
-        self.all_algorithm = AllAlorithm(self.service_id, self.config, self.logger)
-        self.top_algorithm = TopAlgorithm(self.service_id, self.config, self.logger)
+        self.first_algorithm = FirstAlorithm(config, logger)
+        self.second_algorithm = SecondAlgorithm(config, logger)
 
-    def training(self, train_logger):
+    def train(self, train_logger):
         self.logger.info(f"module {self.service_id} start training")
 
-        df_all, train_target_xcodes = self.load_data_and_get_target(csv_list)
-        
-        train_prog.log("process train data", 100)
+        data, targets = self.load_data_and_get_target(csv_list)
+        result, body, code, message = self.first_algorithm.fit(data)
 
-        all_result, body, code, message = self.all_algorithm.fit(df_all)
-
-        xcode_df_mapper = {}
+        target_df_mapper = {}
         is_multiprocessing_mode = True if self.number_of_child_processes >= 2 else False
 
-        total_train_time = 0
+        for i in range(len(targets)):
+            target = targets[i]
 
-        for i in range(len(target)):
-            xcode = target[i]
-
-            self.logger.info(f"[training] preprocessing data of target {xcode}")
-            if len(df_all) > 0:
-                df_xcd = df_all.query(f"{xcode} == '{xcode}'")
-                df_xcd = df_xcd.set_index("time")
-                df_xcd = df_xcd.interpolate()
+            if len(data) > 0:
+                target_df = data.query(f"{target} == '{target}'")
+                target_df = target_df.set_index("time")
+                target_df = target_df.interpolate()
 
                 if not is_multiprocessing_mode:
-                    result = self.top_algorithm.fit(xcode, df_xcd, multiprocessing=False) # 순차 처리
+                    result = self.second_algorithm.fit(target, target_df, multiprocessing=False) # 순차 처리
 
-                xcode_df_mapper[xcode] = df_xcd # 타겟과 데이터 매핑
+                target_df_mapper[target] = target_df # 타겟과 데이터 매핑
 
         if is_multiprocessing_mode:
             pool = pathos.multiprocessing.Pool(processes=self.number_of_child_processes) # 병렬 처리를 위한 pool 생성
-
-            input_iterable = [(key, value) for key, value in xcode_df_mapper.items()] # input_parameter 만들기
-            chunk_size, remainder = divmod(len(input_iterable), self.number_of_child_processes)
+            input_param = [(key, value) for key, value in target_df_mapper.items()] # input_parameter 만들기
+            chunk_size, remainder = divmod(len(input_param), self.number_of_child_processes)
             if remainder != 0:
                 chunk_size += 1
 
-
-            txn_model = zip(*pool.starmap(self.top_algorithm.fit, input_iterable, chunksize=chunk_size)) # 병렬 학습
+            result = zip(*pool.starmap(self.top_algorithm.fit, input_iterable, chunksize=chunk_size)) # 병렬 학습
 
             pool.close()
-            pool.join())
+            pool.join()
 
-            self.logger.info(
-                "[training] finish postprocessing  multiprocessed model"
-            )
 
         # save_model
         self._save_model()
-
-        result = {"all": all_result, "top": {}}
-
-        return result, train_target_xcodes, 0, None
-
+        
+        ```
+        이하생략
+        ```
 ```
 

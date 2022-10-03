@@ -20,18 +20,13 @@ comment: true
   - Web application은 요청을 받으면 분석 모듈에 정의된 serving 함수를 호출해 서빙을 완료하고, 서버로 결과를 전달한다.
 
 ```python
-from flask import Flask, request
-from flask_cors import CORS
-from threading import Semaphore
+from flask import Flask
 '''
 중간 생략
 '''
 
 # define the app
 app = Flask(__name__)
-CORS(app)
-app.logger.addHandler(logging.StreamHandler(sys.stdout))
-app.logger.setLevel(logging.INFO)
 
 '''
 중간 생략
@@ -229,28 +224,19 @@ class Algorithm(aimodel.AIModel):
     def __init__(self, name, config, logger):
         self.config = config
         self.logger = logger
-
-'''
-이하 생략
-'''
+        '''
+        이하 생략
+        '''
 
     def predict_by_ray(self, input_param):
         return [self.predict(*x) for x in input_param]
 
 
-    def predict(self, target, serving_time, sbiz_df, fail_type=None):
-        self.logger.debug(f"input data: {target}:\n{serving_time}")
-
-        if target not in self.models:
-            self.logger.debug(
-                f"return None to module since target {target} not found in model"
-            )
-            return None
-
-        model = self.models[target]
-'''
-이하 생략
-'''
+    def predict(self, **parameter,  fail_type=None):
+        self.logger.debug(f"input data: {target}:\n{serving_time}"
+        '''
+        이하 생략
+        '''
 
 ```
 
@@ -280,15 +266,15 @@ class Analyzer(aimodule.AIModule):
         self.serving_algorithm_actor_pool = [Algorithm.remote(self.service_id, self.config, self.logger) 
 for i in range(self.number_of_ray_actor)]
 
-'''
-이하 생략
-'''
+        '''
+        이하 생략
+        '''
     def serve(self, header, data_dict):
         # API에서 호출되는 서빙 함수
         self.logger.info("=========== Start Serving ===========")
-'''
-중간 생략
-'''
+        '''
+        중간 생략
+        '''
         # 기존 순차 처리 방식에 필요한 정보를 모은다.
         test_target_id = list(input_df.index.values)[0]
         test_count = 500
